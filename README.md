@@ -6,9 +6,9 @@ Backend for fitloop
 
 1. Clone the repository
 2. Create a virtual environment (used python 3.12) ```python -m venv venv```
-3. ```pip install -r requirements.txt```
-4. source venv/bin/activate
-4. python app.py
+3. source venv/bin/activate
+4. ```pip install -r requirements.txt```
+5. python app.py
 
 ## Installation - Method 2
 
