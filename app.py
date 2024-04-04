@@ -18,7 +18,7 @@ os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
 os.makedirs(CSV_DIRECTORY, exist_ok=True)
 
 # Create a POST endpoint to upload an image
-@app.post("/upload-image/")
+@app.post("/upload_image")
 async def upload_image(image: UploadFile = File(...)):
     # Save the uploaded image to a file
     file_path = f"{UPLOAD_DIRECTORY}/{image.filename}"
