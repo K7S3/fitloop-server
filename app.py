@@ -1,6 +1,8 @@
 # Import necessary libraries
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 import uvicorn
 import csv
 import os
@@ -8,6 +10,15 @@ from pydantic import BaseModel
 
 # Initialize the FastAPI app
 app = FastAPI()
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define a directory to store CSV files
 CSV_DIRECTORY = "nutrition_info"
@@ -29,21 +40,15 @@ async def upload_image(file: UploadFile = File(...)):
         # Placeholder for processing the image and extracting nutritional information
         # You would need a model or an API that can analyze the image and provide the nutritional info
         nutritional_info = {
-            "Item": "Example Item",
+            "name": "Example Item",
             "Calories": 100,
-            "Protein": "10g",
-            "Carbohydrates": "20g",
-            "Fats": "5g"
+            "Weight": 39,
+            "Protein": 14,
+            "Carbohydrates": 20,
+            "Fats": 5
         }
 
-        # Generate CSV file from nutritional information
-        csv_filename = "nutritional_info.csv"
-        csv_file_path = f"{CSV_DIRECTORY}/{csv_filename}"
-        with open(csv_file_path, 'w', newline='') as csvfile:
-            fieldnames = nutritional_info.keys()
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow(nutritional_info)
+        return nutritional_info
 
         # Return the CSV file as response
         return FileResponse(path=csv_file_path, filename=csv_filename, media_type='text/csv')
